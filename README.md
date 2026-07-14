@@ -122,20 +122,13 @@ NeuroShield Eye is built on a **modular OOP architecture** where each feature is
 ## 🚀 Installation
 
 ```bash
-# 1. Clone the repository
 git clone https://github.com/avinabmaharjan/NeuroShield-Eye.git
 cd NeuroShield-Eye
-
-# 2. Create a virtual environment (recommended)
 python -m venv venv
 venv\Scripts\activate
-
-# 3. Install dependencies
 pip install -r requirements.txt
-
-# 4. Run the application
-python src/main.py
-```
+python generate_assets.py
+python main.py
 
 ---
 
