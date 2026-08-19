@@ -64,7 +64,7 @@ def setup_logging(level: int = logging.DEBUG) -> None:
 def get_logger(name: str) -> logging.Logger:
     """
     Convenience factory. Usage:
-        from utils.logger import get_logger
+        from logger import get_logger
         log = get_logger(__name__)
     """
     return logging.getLogger(f"neuroshield.{name}")

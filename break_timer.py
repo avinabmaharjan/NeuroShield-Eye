@@ -30,7 +30,7 @@ from PyQt6.QtWidgets import (
 )
 from PyQt6.QtCore import Qt, QSize
 
-from utils.logger import get_logger
+from logger import get_logger
 
 log = get_logger("break_timer")
 

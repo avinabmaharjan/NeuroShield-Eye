@@ -13,7 +13,7 @@ import threading
 from pathlib import Path
 from typing import Any
 
-from utils.logger import get_logger
+from logger import get_logger
 
 log = get_logger("settings_manager")
 

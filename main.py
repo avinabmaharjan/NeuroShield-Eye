@@ -40,17 +40,17 @@ app.setQuitOnLastWindowClosed(False)
 # ---------------------------------------------------------------------------
 # Now import project modules (QApplication is already alive)
 # ---------------------------------------------------------------------------
-from utils.logger import setup_logging, get_logger
-from settings.settings_manager import SettingsManager
-from settings.settings_panel import SettingsWindow
-from database.database_manager import DatabaseManager
-from tray.tray_manager import TrayManager
-from overlay.blue_light_overlay import BlueLightOverlay
-from break_system.break_timer import BreakTimer
-from brightness.dim_engine import DimEngine
-from focus.focus_mode import FocusMode
-from posture.posture_reminder import PostureReminder
-from dashboard.dashboard_window import DashboardWindow
+from logger import setup_logging, get_logger
+from settings_manager import SettingsManager
+from settings_panel import SettingsWindow
+from database_manager import DatabaseManager
+from tray_manager import TrayManager
+from blue_light_overlay import BlueLightOverlay
+from break_timer import BreakTimer
+from dim_engine import DimEngine
+from focus_mode import FocusMode
+from posture_reminder import PostureReminder
+from dashboard_window import DashboardWindow
 
 import winreg  # Windows registry access (pywin32 not needed; winreg is stdlib on Windows)
 

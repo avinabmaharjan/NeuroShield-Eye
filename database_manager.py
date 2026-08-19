@@ -14,7 +14,7 @@ from datetime import date, datetime, timedelta
 from pathlib import Path
 from typing import Optional
 
-from utils.logger import get_logger
+from logger import get_logger
 
 log = get_logger("database_manager")
 

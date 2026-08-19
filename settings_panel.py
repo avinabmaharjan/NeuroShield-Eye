@@ -36,7 +36,7 @@ from PyQt6.QtWidgets import (
     QLineEdit,
 )
 
-from utils.logger import get_logger
+from logger import get_logger
 
 log = get_logger("settings_panel")
 

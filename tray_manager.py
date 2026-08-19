@@ -22,7 +22,7 @@ from PyQt6.QtCore import QObject, pyqtSignal
 from PyQt6.QtGui import QIcon, QColor, QPixmap, QPainter
 from PyQt6.QtWidgets import QMenu, QSystemTrayIcon
 
-from utils.logger import get_logger
+from logger import get_logger
 
 log = get_logger("tray_manager")
 

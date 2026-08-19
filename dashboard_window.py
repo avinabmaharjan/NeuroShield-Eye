@@ -25,7 +25,7 @@ from PyQt6.QtWidgets import (
     QWidget,
 )
 
-from utils.logger import get_logger
+from logger import get_logger
 
 log = get_logger("dashboard_window")
 

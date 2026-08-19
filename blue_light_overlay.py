@@ -19,7 +19,7 @@ from PyQt6.QtCore import Qt
 from PyQt6.QtGui import QColor, QPainter, QPaintEvent
 from PyQt6.QtWidgets import QApplication, QWidget
 
-from utils.logger import get_logger
+from logger import get_logger
 
 log = get_logger("blue_light_overlay")
 

@@ -10,7 +10,7 @@ from PyQt6.QtCore import QObject, QPropertyAnimation, QTimer, Qt, QEasingCurve
 from PyQt6.QtGui import QFont
 from PyQt6.QtWidgets import QApplication, QLabel, QPushButton, QVBoxLayout, QWidget
 
-from utils.logger import get_logger
+from logger import get_logger
 
 log = get_logger("posture_reminder")
 
