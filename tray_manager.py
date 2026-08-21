@@ -54,10 +54,13 @@ def _make_fallback_icon(size: int = 32) -> QIcon:
 def _load_icon() -> QIcon:
     """Load tray_icon.ico from assets/, falling back to generated icon."""
     here = Path(__file__).resolve().parent
+    meipass = os.environ.get("_MEIPASS", "")
     candidates = [
-        here.parent.parent / "assets" / "tray_icon.ico",
-        Path(os.environ.get("_MEIPASS", "")) / "assets" / "tray_icon.ico",
+        here / "assets" / "tray_icon.ico",
+        here.parent / "assets" / "tray_icon.ico",
+        Path(meipass) / "assets" / "tray_icon.ico" if meipass else None,
     ]
+    candidates = [p for p in candidates if p is not None]
     for path in candidates:
         if path.exists():
             return QIcon(str(path))

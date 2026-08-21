@@ -9,35 +9,80 @@ Provides typed getters and a save() method. Thread-safe via a RLock.
 import copy
 import json
 import os
+import sys
 import threading
 from pathlib import Path
-from typing import Any
+from typing import Any, Optional
 
 from logger import get_logger
 
 log = get_logger("settings_manager")
 
+_EMBEDDED_DEFAULTS = {
+    "app": {
+        "start_with_windows": False,
+        "minimize_to_tray": True,
+        "show_notifications": True,
+    },
+    "blue_light": {
+        "enabled": True,
+        "color_temperature": 3400,
+        "opacity": 0.35,
+    },
+    "break_timer": {
+        "mode": "20-20-20",
+        "work_interval_minutes": 20,
+        "break_duration_seconds": 20,
+        "forced_break": False,
+        "sound_enabled": True,
+        "custom_work_minutes": 45,
+        "custom_break_minutes": 5,
+    },
+    "dim_engine": {
+        "enabled": False,
+        "opacity": 0.0,
+    },
+    "focus_mode": {
+        "enabled": False,
+        "dim_opacity": 0.6,
+        "grayscale": False,
+    },
+    "posture": {
+        "enabled": True,
+        "interval_minutes": 30,
+        "message": "Check your posture! Sit up straight and relax your shoulders.",
+    },
+    "analytics": {
+        "track_screen_time": True,
+        "daily_goal_hours": 8,
+    },
+}
+
 
 def _get_user_config_path() -> Path:
-    app_data = os.environ.get("APPDATA", Path.home())
-    config_dir = Path(app_data) / "NeuroShieldEye"
+    app_data = os.environ.get("APPDATA")
+    if app_data:
+        config_dir = Path(app_data) / "NeuroShieldEye"
+    else:
+        config_dir = Path.home() / ".NeuroShieldEye"
     config_dir.mkdir(parents=True, exist_ok=True)
     return config_dir / "user_config.json"
 
 
-def _get_default_config_path() -> Path:
-    """Locate default_config.json relative to the project root or frozen exe."""
-    # When running from source: NeuroShield-Eye/src/settings/settings_manager.py
-    # default_config is at NeuroShield-Eye/config/default_config.json
+def _get_default_config_path() -> Optional[Path]:
+    """Locate default_config.json in the flat tree or a frozen bundle."""
     here = Path(__file__).resolve().parent
+    meipass = getattr(sys, "_MEIPASS", "")
     candidates = [
-        here.parent.parent / "config" / "default_config.json",  # source tree
-        Path(os.environ.get("_MEIPASS", "")) / "config" / "default_config.json",  # PyInstaller
+        here / "default_config.json",
+        here / "config" / "default_config.json",
+        Path(meipass) / "default_config.json" if meipass else None,
+        Path(meipass) / "config" / "default_config.json" if meipass else None,
     ]
     for path in candidates:
-        if path.exists():
+        if path is not None and path.exists():
             return path
-    raise FileNotFoundError("default_config.json not found in any expected location.")
+    return None
 
 
 class SettingsManager:
@@ -107,12 +152,16 @@ class SettingsManager:
             # Load defaults
             try:
                 default_path = _get_default_config_path()
-                with open(default_path, "r", encoding="utf-8") as f:
-                    self._defaults = json.load(f)
-                log.debug("Loaded defaults from %s", default_path)
-            except (FileNotFoundError, json.JSONDecodeError) as e:
+                if default_path:
+                    with open(default_path, "r", encoding="utf-8") as f:
+                        self._defaults = json.load(f)
+                    log.debug("Loaded defaults from %s", default_path)
+                else:
+                    self._defaults = copy.deepcopy(_EMBEDDED_DEFAULTS)
+                    log.debug("Using embedded default config.")
+            except (OSError, json.JSONDecodeError) as e:
                 log.error("Cannot load default config: %s", e)
-                self._defaults = {}
+                self._defaults = copy.deepcopy(_EMBEDDED_DEFAULTS)
 
             self._config = copy.deepcopy(self._defaults)
 
