@@ -7,20 +7,17 @@
 # Output: dist/NeuroShieldEye.exe
 
 from PyInstaller.utils.hooks import collect_data_files
-import os
 
 block_cipher = None
-
-# Collect pyqtgraph data files (includes colormaps, etc.)
 pyqtgraph_datas = collect_data_files("pyqtgraph")
 
 a = Analysis(
-    ["src/main.py"],
-    pathex=["src"],
+    ["main.py"],
+    pathex=["."],
     binaries=[],
     datas=[
         ("assets", "assets"),
-        ("config", "config"),
+        ("default_config.json", "."),
         *pyqtgraph_datas,
     ],
     hiddenimports=[
@@ -32,18 +29,18 @@ a = Analysis(
         "winreg",
         "winsound",
         "msvcrt",
-        # All project modules
-        "utils.logger",
-        "settings.settings_manager",
-        "settings.settings_panel",
-        "database.database_manager",
-        "tray.tray_manager",
-        "overlay.blue_light_overlay",
-        "break_system.break_timer",
-        "brightness.dim_engine",
-        "focus.focus_mode",
-        "posture.posture_reminder",
-        "dashboard.dashboard_window",
+        "logger",
+        "settings_manager",
+        "settings_panel",
+        "database_manager",
+        "tray_manager",
+        "blue_light_overlay",
+        "break_timer",
+        "dim_engine",
+        "focus_mode",
+        "posture_reminder",
+        "dashboard_window",
+        "auth_window",
     ],
     hookspath=[],
     hooksconfig={},
@@ -79,13 +76,12 @@ exe = EXE(
     upx=True,
     upx_exclude=[],
     runtime_tmpdir=None,
-    console=False,           # No console window (windowed app)
+    console=False,
     disable_windowed_traceback=False,
     argv_emulation=False,
     target_arch=None,
     codesign_identity=None,
     entitlements_file=None,
     icon="assets/tray_icon.ico",
-    uac_admin=False,         # Set to True if registry write needs elevation
-    version=None,
+    uac_admin=False,
 )

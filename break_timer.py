@@ -15,9 +15,13 @@ Signals emitted:
   tick              → (seconds_remaining: int) for countdown UI
 """
 
-import winsound
 from pathlib import Path
 from typing import Optional
+
+try:
+    import winsound
+except ImportError:
+    winsound = None  # type: ignore
 
 from PyQt6.QtCore import QObject, QTimer, pyqtSignal
 from PyQt6.QtGui import QColor, QFont, QPainter, QPaintEvent
@@ -291,6 +295,8 @@ class BreakTimer(QObject):
 
     def _play_alert(self) -> None:
         """Play the break alert sound asynchronously."""
+        if winsound is None:
+            return
         sound_path = self._find_sound_file()
         if sound_path and sound_path.exists():
             try:
@@ -301,7 +307,6 @@ class BreakTimer(QObject):
                 return
             except Exception as e:
                 log.warning("Could not play sound file: %s", e)
-        # Fallback: system beep
         try:
             winsound.MessageBeep(winsound.MB_ICONASTERISK)
         except Exception:

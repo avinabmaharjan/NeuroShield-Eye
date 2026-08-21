@@ -1,6 +1,6 @@
-# NeuroShield Eye — Quick Start Guide
+# NeuroShield Eye Pro — Quick Start
 
-## First-Time Setup (3 minutes)
+## First-time setup (3 minutes)
 
 ### 1. Install dependencies
 ```bash
@@ -13,53 +13,48 @@ pip install -r requirements.txt
 ```bash
 python generate_assets.py
 ```
-This creates:
-- `assets/tray_icon.ico` — system tray icon
-- `assets/sounds/break_alert.wav` — break notification sound
+Creates:
+- `assets/tray_icon.ico`
+- `assets/sounds/break_alert.wav`
 
-> Replace these with your own professional assets at any time.
-
-### 3. Run the app
+### 3. Run
 ```bash
-python src/main.py
+python main.py
 ```
 
-NeuroShield Eye will appear in your **system tray** (bottom-right).
-Right-click the eye icon to access all features.
+Create a local name + PIN. The sidebar dashboard is the home screen; the tray icon keeps the overlays alive if you close the window.
+
+---
+
+## What to click first
+
+1. **Dashboard** — 20-20-20 bar and today’s numbers (a demo week is seeded so charts are not empty).
+2. **Eye Protection** — drag temperature / dim sliders (overlay reacts immediately). Apply **Late Night Coding** or **Gaming Mode**.
+3. **Focus Mode** — turn on the visual anchor; other windows dim.
+4. **Lock** in the sidebar when you step away.
 
 ---
 
 ## Troubleshooting
 
-**"No module named 'PyQt6'"**
-→ Run: `pip install -r requirements.txt`
+**"No module named 'PyQt6'"**  
+→ `pip install -r requirements.txt`
 
-**"System tray not available"**
-→ Ensure Windows 11 task bar is enabled and not hidden.
+**System tray missing**  
+→ Windows taskbar must be available. The dashboard still runs.
 
-**Tray icon is generic/missing**
-→ Run `python generate_assets.py` then restart.
+**Focus Mode does nothing on one monitor**  
+→ It punches a hole around the *foreground* window. Click the app you want to keep bright.
 
-**Break sound doesn't play**
-→ The app falls back to `winsound.MessageBeep()`. Check your audio is on.
-
----
-
-## Build Executable
-
-```bash
-pip install pyinstaller
-python generate_assets.py   # Ensure assets exist
-pyinstaller NeuroShieldEye.spec
-# Output: dist/NeuroShieldEye.exe
-```
+**Forgot PIN**  
+→ Data is local. Delete `%APPDATA%\NeuroShieldEye\neuroshield.db` to re-run first-time setup (this also clears analytics/profiles).
 
 ---
 
-## File Locations (Runtime)
+## File locations
 
 | File | Location |
 |------|----------|
-| Database | `%APPDATA%\NeuroShieldEye\data.db` |
+| Database | `%APPDATA%\NeuroShieldEye\neuroshield.db` |
 | User config | `%APPDATA%\NeuroShieldEye\user_config.json` |
-| Log files | `%APPDATA%\NeuroShieldEye\logs\neuroshield.log` |
+| Logs | `%APPDATA%\NeuroShieldEye\logs\neuroshield.log` |

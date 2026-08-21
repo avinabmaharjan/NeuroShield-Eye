@@ -1,12 +1,11 @@
 # -*- mode: python ; coding: utf-8 -*-
 
-
 a = Analysis(
     ['main.py'],
     pathex=[],
     binaries=[],
     datas=[('default_config.json', '.'), ('assets', 'assets')],
-    hiddenimports=[],
+    hiddenimports=['auth_window', 'dashboard_window', 'database_manager'],
     hookspath=[],
     hooksconfig={},
     runtime_hooks=[],
