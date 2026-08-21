@@ -1,0 +1,39 @@
+{
+  "app": {
+    "start_with_windows": false,
+    "minimize_to_tray": true,
+    "show_notifications": true
+  },
+  "blue_light": {
+    "enabled": true,
+    "color_temperature": 3400,
+    "opacity": 0.35
+  },
+  "break_timer": {
+    "mode": "20-20-20",
+    "work_interval_minutes": 20,
+    "break_duration_seconds": 20,
+    "forced_break": false,
+    "sound_enabled": true,
+    "custom_work_minutes": 45,
+    "custom_break_minutes": 5
+  },
+  "dim_engine": {
+    "enabled": false,
+    "opacity": 0.0
+  },
+  "focus_mode": {
+    "enabled": false,
+    "dim_opacity": 0.6,
+    "grayscale": false
+  },
+  "posture": {
+    "enabled": true,
+    "interval_minutes": 30,
+    "message": "Check your posture! Sit up straight and relax your shoulders."
+  },
+  "analytics": {
+    "track_screen_time": true,
+    "daily_goal_hours": 8
+  }
+}
